@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <defaults public="false" />
+
+        <service id="articul_search.config_manager" class="App\Application\Articul\SearchBundle\Configuration\ConfigManager" public="true">
+            <argument type="collection" /> <!-- collection of SourceInterface services -->
+        </service>
+        <service id="App\Application\Articul\SearchBundle\Configuration\ConfigManager" alias="articul_search.config_manager" />
+
+        <service id="articul_search.type_prototype" class="App\Application\Articul\SearchBundle\Type\Type" public="true" abstract="true">
+            <argument /> <!-- type name -->
+            <argument /> <!-- config -->
+            <!-- tagged with articul_search.type in the Extension -->
+        </service>
+
+        <service id="articul_search.search" class="App\Application\Articul\SearchBundle\Search\Search" public="true">
+            <argument type="service" id="articul_search.type_manager" />
+            <argument type="service" id="service_container" />
+        </service>
+    </services>
+</container>
